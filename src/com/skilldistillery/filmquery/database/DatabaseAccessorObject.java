@@ -53,8 +53,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setReplacementCost(rs.getDouble("replacement_cost"));
 				film.setRating(rs.getString("rating"));
 				film.setSpecialFeatures(rs.getString("special_features"));
-				film.setLanguage(rs.getString("name"));
-				film.setCategory(rs.getString("name"));
+				film.setCategory(rs.getString("category.name"));
+				film.setLanguage(rs.getString("language.name"));
 				film.setActors(findActorsByFilmId(film.getId()));
 			}
 		} catch (SQLException e) {
@@ -78,9 +78,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setInt(1, actorId);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				actor.setId(rs.getInt(1));
-				actor.setFirstName(rs.getString(2));
-				actor.setLastName(rs.getString(3));
+				actor.setId(rs.getInt("id"));
+				actor.setFirstName(rs.getString("first_name"));
+				actor.setLastName(rs.getString("last_name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,8 +164,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setReplacementCost(rs.getDouble("replacement_cost"));
 				film.setRating(rs.getString("rating"));
 				film.setSpecialFeatures(rs.getString("special_features"));
-				film.setLanguage(rs.getString("name"));
-				film.setCategory(rs.getString("name"));
+				film.setLanguage(rs.getString("language.name"));
+				film.setCategory(rs.getString("category.name"));
 				film.setActors(findActorsByFilmId(film.getId()));
 			}
 		} catch (SQLException e) {

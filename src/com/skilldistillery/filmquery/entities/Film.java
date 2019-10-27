@@ -230,12 +230,14 @@ public class Film {
 	@Override
 	public String toString() {
 		return String.format(
-				"Film: id: %s \ntitle: %s \ndescription: %s \nrelease year: %s \nlanguage ID: %s \nrental duration: %s "
-				+ "\nrental rate: %s \nlength: %s \nreplacement cost: %s \nrating: %s \nspecial features: %s \nlanguage: %s"
-				+ "\ncategory: %s \nactors: %s",
-				id, title, description, releaseYear, languageID, rentalDuration, rentalRate, length, replacementCost,
-				rating, specialFeatures, language, category, actors);
+				"Film id: %s \ntitle: %s \ndescription: %s \nrelease year: %s \nlength: %s \nrating: %s "
+				+ "\nspecial features: %s \ncategory: %s \nlanguage: %s  \nactors: %s",
+				id, title, description, releaseYear, length, rating, specialFeatures, category, language, actors);
 	}
+
+
+
+	
 
 	
 
