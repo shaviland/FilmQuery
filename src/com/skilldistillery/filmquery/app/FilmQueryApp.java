@@ -16,7 +16,6 @@ public class FilmQueryApp {
 		app.launch();
 	}
 
-
 	private void launch() {
 		Scanner input = new Scanner(System.in);
 
@@ -59,20 +58,19 @@ public class FilmQueryApp {
 
 	private boolean lookUpFlim(int choice, Scanner input) {
 		switch (choice) {
-		case 1: {
+		case 1:
 			filmById(input);
 			break;
-		}
-		case 2: {
-			filmByKeyword(input);
 
+		case 2:
+			filmByKeyword(input);
 			break;
-		}
-		default: {
+
+		default:
 			System.out.println("Goodbye.");
 			db.closeConnection();
 			return true;
-		}
+
 		}
 		return false;
 	}
@@ -85,9 +83,30 @@ public class FilmQueryApp {
 		try {
 			int filmId = Integer.parseInt(selection);
 			film = db.findFilmById(filmId);
+			boolean valid = true;
 			if (film != null) {
-				System.out.println(film);
+				System.out.println(film.getTitle());
 				System.out.println();
+				film = db.findFilmById(filmId);
+			
+				do {
+				System.out.println("Do you want to:\n1. See film details \n2. Go to main menu.");
+				String choice = input.nextLine();
+				int filmChoice = Integer.parseInt(choice);
+				switch (filmChoice) {
+				case 1:
+					System.out.println(film);
+					break;
+				case 2:
+					valid = false;
+					break;
+				default:
+					System.out.println("That is not a valid selection");
+					break;
+				}
+				}while(valid);
+				
+
 			} else {
 				System.out.println("There is no film with that ID.");
 			}
