@@ -5,7 +5,7 @@ import java.util.List;
 public class Actor {
 	private int id;
 	private String firstName;
-	private String lasstName;
+	private String lastName;
 	private List<Film> films;
 	
 	
@@ -19,7 +19,7 @@ public class Actor {
 		super();
 		this.id = id;
 		this.firstName = firstName;
-		this.lasstName = lasstName;
+		this.lastName = lasstName;
 	}
 	
 	
@@ -29,7 +29,7 @@ public class Actor {
 		super();
 		this.id = id;
 		this.firstName = firstName;
-		this.lasstName = lasstName;
+		this.lastName = lasstName;
 		this.films = films;
 	}
 
@@ -56,11 +56,11 @@ public class Actor {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getLasstName() {
-		return lasstName;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLasstName(String lasstName) {
-		this.lasstName = lasstName;
+	public void setLastName(String lasstName) {
+		this.lastName = lasstName;
 	}
 	@Override
 	public int hashCode() {
@@ -68,7 +68,7 @@ public class Actor {
 		int result = 1;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((lasstName == null) ? 0 : lasstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
 	@Override
@@ -87,16 +87,16 @@ public class Actor {
 			return false;
 		if (id != other.id)
 			return false;
-		if (lasstName == null) {
-			if (other.lasstName != null)
+		if (lastName == null) {
+			if (other.lastName != null)
 				return false;
-		} else if (!lasstName.equals(other.lasstName))
+		} else if (!lastName.equals(other.lastName))
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return String.format("Actor [id=%s, firstName=%s, lasstName=%s]", id, firstName, lasstName);
+		return String.format("%s %s", firstName, lastName);
 	}
 	
 	
