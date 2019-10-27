@@ -21,6 +21,27 @@ public class Actor {
 		this.firstName = firstName;
 		this.lasstName = lasstName;
 	}
+	
+	
+
+
+	public Actor(int id, String firstName, String lasstName, List<Film> films) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lasstName = lasstName;
+		this.films = films;
+	}
+
+
+	public List<Film> getFilms() {
+		return films;
+	}
+
+
+	public void setFilms(List<Film> films) {
+		this.films = films;
+	}
 
 
 	public int getId() {
