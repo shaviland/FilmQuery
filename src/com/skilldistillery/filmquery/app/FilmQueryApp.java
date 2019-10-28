@@ -88,7 +88,6 @@ public class FilmQueryApp {
 				System.out.println(film.getTitle());
 				System.out.println();
 				film = db.findFilmById(filmId);
-			
 				do {
 				System.out.println("Do you want to:\n1. See film details \n2. Go to main menu.");
 				String choice = input.nextLine();
@@ -96,6 +95,7 @@ public class FilmQueryApp {
 				switch (filmChoice) {
 				case 1:
 					System.out.println(film);
+					valid = false;
 					break;
 				case 2:
 					valid = false;
@@ -120,11 +120,29 @@ public class FilmQueryApp {
 		Film film = new Film();
 		System.out.print("Input a keyword: ");
 		String keyword = input.nextLine();
+		boolean valid = true;
 
 		film = db.findFilmByKeyword(keyword);
 		if (film != null) {
-			System.out.println(film);
+			System.out.println(film.getTitle());
 			System.out.println();
+			do {
+				System.out.println("Do you want to:\n1. See film details \n2. Go to main menu.");
+				String choice = input.nextLine();
+				int filmChoice = Integer.parseInt(choice);
+				switch (filmChoice) {
+				case 1:
+					System.out.println(film);
+					valid = false;
+					break;
+				case 2:
+					valid = false;
+					break;
+				default:
+					System.out.println("That is not a valid selection");
+					break;
+				}
+				}while(valid);
 		} else {
 			System.out.println("There is no film with that description");
 		}
