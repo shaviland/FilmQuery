@@ -11,8 +11,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
 	private static String user = "student";
 	private static String password = "student";
-	private PreparedStatement stmt;
-	private ResultSet rs;
 	private static Connection conn;
 	static {
 		try {
@@ -28,6 +26,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	public Film findFilmById(int filmId) {
 
 		Film film = null;
+		PreparedStatement stmt;
+		ResultSet rs;
 
 		String sql = "SELECT film.*, language.name, category.name FROM film \n"
 				+ "JOIN language ON language.id = film.language_id \n"
@@ -56,6 +56,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setLanguage(rs.getString("language.name"));
 				film.setActors(findActorsByFilmId(film.getId()));
 			}
+			rs.close();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return film;
@@ -66,6 +68,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	public Actor findActorById(int actorId) {
+		PreparedStatement stmt;
+		ResultSet rs;
+
 
 		String sql = "SELECT id, first_name, last_name FROM actor WHERE id = ?";
 		Actor actor = new Actor();
@@ -78,6 +83,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				actor.setFirstName(rs.getString("first_name"));
 				actor.setLastName(rs.getString("last_name"));
 			}
+			rs.close();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 
@@ -90,6 +97,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	public List<Actor> findActorsByFilmId(int filmId) {
 		List<Actor> actors = new ArrayList<>();
 		Actor actor = null;
+		PreparedStatement stmt;
+		ResultSet rs;
+
 		try {
 			String sql = "SELECT id, first_name, last_name \n" + "FROM actor JOIN film_actor \n"
 					+ "ON actor.id = film_actor.actor_id \n" + "WHERE film_id = ?";
@@ -108,6 +118,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 				actors.add(actor);
 			}
+			rs.close();
+			stmt.close();
 			return actors;
 
 		} catch (SQLException e) {
@@ -118,9 +130,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	public void closeConnection() {
+		
 		try {
-			rs.close();
-			stmt.close();
+			
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

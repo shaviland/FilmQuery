@@ -141,6 +141,7 @@ public class FilmQueryApp {
 		films = db.findFilmByKeyword(keyword);
 		if (films.size() == 0 || films == null) {
 			System.out.println("There are no films with that keyword.");
+			valid = false;
 
 		} else {
 
@@ -151,7 +152,7 @@ public class FilmQueryApp {
 			}
 		}
 
-		do {
+		while (valid){
 			System.out.println("Do you want to:\n1. See a film's details \n2. Go to main menu.");
 			String choice = input.nextLine();
 			int filmChoice = Integer.parseInt(choice);
@@ -175,7 +176,7 @@ public class FilmQueryApp {
 				System.out.println("That is not a valid selection");
 				break;
 			}
-		} while (valid);
+		} 
 
 	}
 
