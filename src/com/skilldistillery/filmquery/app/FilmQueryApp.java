@@ -1,6 +1,9 @@
 package com.skilldistillery.filmquery.app;
 
+import java.io.ObjectInputStream.GetField;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
@@ -89,23 +92,22 @@ public class FilmQueryApp {
 				System.out.println();
 				film = db.findFilmById(filmId);
 				do {
-				System.out.println("Do you want to:\n1. See film details \n2. Go to main menu.");
-				String choice = input.nextLine();
-				int filmChoice = Integer.parseInt(choice);
-				switch (filmChoice) {
-				case 1:
-					System.out.println(film);
-					valid = false;
-					break;
-				case 2:
-					valid = false;
-					break;
-				default:
-					System.out.println("That is not a valid selection");
-					break;
-				}
-				}while(valid);
-				
+					System.out.println("Do you want to:\n1. See film details \n2. Go to main menu.");
+					String choice = input.nextLine();
+					int filmChoice = Integer.parseInt(choice);
+					switch (filmChoice) {
+					case 1:
+						System.out.println(film);
+						valid = false;
+						break;
+					case 2:
+						valid = false;
+						break;
+					default:
+						System.out.println("That is not a valid selection");
+						break;
+					}
+				} while (valid);
 
 			} else {
 				System.out.println("There is no film with that ID.");
@@ -116,36 +118,64 @@ public class FilmQueryApp {
 
 	}
 
-	private void filmByKeyword(Scanner input) {
+	private void filmById(int input) {
 		Film film = new Film();
+
+		film = db.findFilmById(input);
+		if (film != null) {
+			System.out.println(film);
+		} else {
+			System.out.println("There is no film with that ID.");
+		}
+
+	}
+
+	private void filmByKeyword(Scanner input) {
+
+		List<Film> films = new ArrayList<>();
+
 		System.out.print("Input a keyword: ");
 		String keyword = input.nextLine();
 		boolean valid = true;
 
-		film = db.findFilmByKeyword(keyword);
-		if (film != null) {
-			System.out.println(film.getTitle());
-			System.out.println();
-			do {
-				System.out.println("Do you want to:\n1. See film details \n2. Go to main menu.");
-				String choice = input.nextLine();
-				int filmChoice = Integer.parseInt(choice);
-				switch (filmChoice) {
-				case 1:
-					System.out.println(film);
-					valid = false;
-					break;
-				case 2:
-					valid = false;
-					break;
-				default:
-					System.out.println("That is not a valid selection");
-					break;
-				}
-				}while(valid);
+		films = db.findFilmByKeyword(keyword);
+		if (films.size() == 0 || films == null) {
+			System.out.println("There are no films with that keyword.");
+
 		} else {
-			System.out.println("There is no film with that description");
+
+			for (Film film : films) {
+
+				System.out.println("Film ID: " + film.getId() + " \nFilm Title: " + film.getTitle());
+				System.out.println();
+			}
 		}
+
+		do {
+			System.out.println("Do you want to:\n1. See a film's details \n2. Go to main menu.");
+			String choice = input.nextLine();
+			int filmChoice = Integer.parseInt(choice);
+			switch (filmChoice) {
+			case 1:
+				System.out.print("Enter Film ID for details: ");
+				String filmSelection = input.nextLine();
+				try {
+					int filmID = Integer.parseInt(filmSelection);
+					filmById(filmID);
+					System.out.println();
+				} catch (NumberFormatException e) {
+					System.out.println("That is not a valid number");
+				}
+				valid = false;
+				break;
+			case 2:
+				valid = false;
+				break;
+			default:
+				System.out.println("That is not a valid selection");
+				break;
+			}
+		} while (valid);
 
 	}
 
